@@ -6,13 +6,13 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/08 18:31:51 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:12:23 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	initialize_info(t_data *data, char **str)
+int	init_info(t_data *data, char **str)
 {
 	data->info = malloc(sizeof(t_info));
 	if (!data->info)
@@ -30,3 +30,51 @@ int	initialize_info(t_data *data, char **str)
 	return (0);
 }
 
+int	init_mutex(t_data *data)
+{
+	int	i;
+
+	data->mutex = malloc(sizeof(t_mutex));
+	if (!data->mutex)
+		return (1);
+	data->mutex->forks = malloc(sizeof(pthread_mutex_t)
+		* data->info->nbr_philos);
+	if (!data->mutex->forks)
+		return (1);
+	i = 0;
+	while(i < data->info->nbr_philos)
+	{
+		if (pthread_mutex_init(&data->mutex->forks[i], NULL) != 0)
+			return (1);
+		i++;
+	}
+	if (pthread_mutex_init(&data->mutex->write_lock, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&data->mutex->eat_lock, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&data->mutex->death_lock, NULL) != 0)
+		return (1);
+	return (0);
+}
+
+int	init_philos(t_data *data)
+{
+	int	i;
+
+	data->arr_philo = malloc(sizeof(t_philo) * data->info->nbr_philos);
+	if (!data->arr_philo)
+		return (1);
+	i = 0;
+	while(i < data->info->nbr_philos)
+	{
+		data->arr_philo[i].id = i + 1;
+		data->arr_philo[i].meals_eaten = 0;
+		data->arr_philo[i].last_meal_eaten = data->info->start_time;
+		data->arr_philo[i].left_fork = &data->mutex->forks[i];
+		data->arr_philo[i].right_fork = &data->mutex->forks[(i + 1)
+			% data->info->nbr_philos];
+		data->arr_philo[i].data = data;
+		i++;
+	}
+	return (0);
+}

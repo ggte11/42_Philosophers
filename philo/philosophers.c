@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:55 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/08 18:36:10 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:25:16 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parsing(int nb_params, char **params)
 		while (params[j][i] != '\0')
 		{
 			if (!ft_isdigit(params[j][i]))
-				return(write(2, "Invalid character", 18));
+				return(write(2, "Invalid parameter character", 28));
 			i++;
 		}
 		j++;
@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (initialize_info(data, argv))
+	if (init_info(data, argv) || init_mutex(data))
 		return (1);
 	return (0);
 }
