@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/14 18:12:23 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/21 17:23:26 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,29 @@ int	init_mutex(t_data *data)
 	return (0);
 }
 
-int	init_philos(t_data *data)
+int	init_philo(t_data *data, int i)
+{
+	data->arr_philo[i].id = i + 1;
+	data->arr_philo[i].meals_eaten = 0;
+	data->arr_philo[i].last_meal_eaten = data->info->start_time;
+	data->arr_philo[i].left_fork = &data->mutex->forks[i];
+	data->arr_philo[i].right_fork = &data->mutex->forks[(i + 1)
+		% data->info->nbr_philos];
+	return (0);
+}
+
+int	init_all_philos(t_data *data)
 {
 	int	i;
 
+	i = 0;
 	data->arr_philo = malloc(sizeof(t_philo) * data->info->nbr_philos);
 	if (!data->arr_philo)
 		return (1);
-	i = 0;
-	while(i < data->info->nbr_philos)
+	while (i < data->info->nbr_philos)
 	{
-		data->arr_philo[i].id = i + 1;
-		data->arr_philo[i].meals_eaten = 0;
-		data->arr_philo[i].last_meal_eaten = data->info->start_time;
-		data->arr_philo[i].left_fork = &data->mutex->forks[i];
-		data->arr_philo[i].right_fork = &data->mutex->forks[(i + 1)
-			% data->info->nbr_philos];
-		data->arr_philo[i].data = data;
+		if (init_philo(data, i))
+			return (1);
 		i++;
 	}
 	return (0);
