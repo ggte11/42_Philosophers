@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:23:01 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/21 17:20:09 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:30:31 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,26 @@ long	get_time(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + tv.tv_usec / 1000);
+}
+
+void	ft_usleep(long milsecs)
+{
+	long	start;
+
+	start = get_time();
+	while ((get_time() - start) < milsecs)
+		usleep(100);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
+	long	timestamp;
+
+	pthread_mutex_lock(&philo->data->mutex->write_lock);
+	if (!is_dead(philo->data))
+	{
+		timestamp = get_time() - philo->data->info->start_time;
+		printf("%ld %d %s\n", timestamp, philo->id, status);
+	}
+	pthread_mutex_unlock(&philo->data->mutex->write_lock);
 }

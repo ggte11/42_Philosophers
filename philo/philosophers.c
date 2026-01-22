@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:55 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/21 17:12:40 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/22 18:32:26 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	parsing(int nb_params, char **params)
+static int	parsing(int nb_params, char **params)
 {
 	int i;
 	int j;
@@ -32,6 +32,16 @@ int	parsing(int nb_params, char **params)
 		j++;
 	}
 	return (0);
+}
+
+bool	is_dead(t_data *data)
+{
+	bool	dead;
+
+	pthread_mutex_lock(&data->mutex->death_lock);
+	dead = !data->info->all_philos_alive;
+	pthread_mutex_unlock(&data->mutex->death_lock);
+	return (dead);
 }
 
 int	main(int argc, char **argv)

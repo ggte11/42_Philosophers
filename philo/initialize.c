@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/21 17:23:26 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:35:41 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	init_philo(t_data *data, int i)
 	data->arr_philo[i].left_fork = &data->mutex->forks[i];
 	data->arr_philo[i].right_fork = &data->mutex->forks[(i + 1)
 		% data->info->nbr_philos];
+	data->arr_philo[i].data = data;
 	return (0);
 }
 

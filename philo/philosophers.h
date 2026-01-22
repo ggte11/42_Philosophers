@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:57 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/21 17:29:07 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:36:07 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <stdbool.h>
+
+typedef struct s_data	t_data;
 
 typedef struct	s_mutex
 {
@@ -47,6 +49,7 @@ typedef struct	s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	t_data			*data;
 }	t_philo;
 
 typedef struct	s_data
@@ -56,10 +59,15 @@ typedef struct	s_data
 	t_mutex	*mutex;
 }	t_data;
 
+// main
+bool	is_dead(t_data *data);
+
 // utils
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 long	get_time(void);
+void	ft_usleep(long milsecs);
+void	print_status(t_philo *philo, char *status);
 
 // initializer
 int		init_info(t_data *data, char **str);
