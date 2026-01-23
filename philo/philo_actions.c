@@ -42,3 +42,76 @@ static void	*philo_routine(void *arg)
 	}
 	return (NULL);
 }
+
+/// @brief Checks all philosophers for required number of meals.
+/// @param data 
+/// @return int
+static int	all_ate_enough(t_data *data)
+{
+	int	i;
+	int	finished;
+
+	if (data->info->meal_amount == -1)
+		return (0);
+	finished = 0;
+	i = 0;
+	pthread_mutex_lock(&data->mutex->eat_lock);
+	while (i < data->info->nbr_philos)
+	{
+		if (&data->arr_philo[i].meals_eaten >= &data->info->meal_amount)
+			finished++;
+		i++;
+	}
+	pthread_mutex_unlock(&data->mutex->eat_lock);
+	if (finished == data->info->nbr_philos)
+	{
+		pthread_mutex_lock(&data->mutex->death_lock);
+		data->info->all_philos_alive = false;
+		pthread_mutex_unlock(&data->mutex->death_lock);
+		return (1);
+	}
+	return (0);
+}
+
+/// @brief loop that checks for deaths and meal completion.
+/// @param data 
+void	monitoring(t_data *data)
+{
+	int	i;
+
+	while (1)
+	{
+		i = 0;
+		while (i < data->info->nbr_philos)
+		{
+			if (is_dead(data))
+				return ;
+			i++;
+		}
+		if (all_ate_enough(data))
+			return ;
+		usleep(100);
+	}
+}
+
+int	start_simulation(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->info->nbr_philos)
+	{
+		if (pthread_create(&data->arr_philo[i].thread, NULL,
+				philo_routine, &data->arr_philo[i]) != 0)
+			return (1);
+		i++;
+	}
+	monitoring(data);
+	i = 0;
+	while (i < data->info->nbr_philos)
+	{
+		pthread_join(data->arr_philo[i].thread, NULL);
+		i++;
+	}
+	return (0);
+}

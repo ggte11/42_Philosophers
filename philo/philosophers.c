@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:55 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/22 18:32:26 by martim           ###   ########.fr       */
+/*   Updated: 2026/01/23 16:58:49 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	parsing(int nb_params, char **params)
 	int j;
 
 	j = 1;
-	if (nb_params < 5 && nb_params > 6)
+	if (nb_params != 5 && nb_params != 6)
 		return(write(2, "Incorrect number of arguments", 30));
 	while (j < nb_params)
 	{
@@ -55,5 +55,6 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_info(data, argv) || init_mutex(data) || init_all_philos(data))
 		return (1);
+	start_simulation(data);
 	return (0);
 }
