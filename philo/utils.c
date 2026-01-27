@@ -67,10 +67,12 @@ void	print_status(t_philo *philo, char *status)
 	long	timestamp;
 
 	pthread_mutex_lock(&philo->data->mutex->write_lock);
-	if (!is_dead(philo->data))
+	pthread_mutex_lock(&philo->data->mutex->death_lock);
+	if (philo->data->info->all_philos_alive)
 	{
 		timestamp = get_time() - philo->data->info->start_time;
 		printf("%ld %d %s\n", timestamp, philo->id, status);
 	}
+	pthread_mutex_unlock(&philo->data->mutex->death_lock);
 	pthread_mutex_unlock(&philo->data->mutex->write_lock);
 }

@@ -3,7 +3,8 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 OBJ_DIR		= obj
 
-SRCS		= philosophers.c initialize.c utils.c philo_actions.c
+SRCS		= philosophers.c initialize.c utils.c \
+			  philo_actions.c monitoring.c
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 GREEN		= \033[0;32m

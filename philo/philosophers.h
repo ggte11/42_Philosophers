@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:57 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/23 16:51:11 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:12:30 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ typedef struct	s_data
 // main
 bool	is_dead(t_data *data);
 
-// philo_actions
+// monitoring
 void	monitoring(t_data *data);
-int	start_simulation(t_data *data);
+
+// philo_actions
+int		start_simulation(t_data *data);
 
 // utils
 int		ft_isdigit(int c);

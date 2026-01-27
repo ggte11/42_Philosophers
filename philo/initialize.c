@@ -6,7 +6,7 @@
 /*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/22 19:35:41 by martim           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:54:24 by martim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,16 @@ int	init_mutex(t_data *data)
 	while(i < data->info->nbr_philos)
 	{
 		if (pthread_mutex_init(&data->mutex->forks[i], NULL) != 0)
+		{
+			while(--i >= 0)
+				pthread_mutex_destroy(&data->mutex->forks[i]);
 			return (1);
+		}
 		i++;
 	}
-	if (pthread_mutex_init(&data->mutex->write_lock, NULL) != 0)
-		return (1);
-	if (pthread_mutex_init(&data->mutex->eat_lock, NULL) != 0)
-		return (1);
-	if (pthread_mutex_init(&data->mutex->death_lock, NULL) != 0)
-		return (1);
+	pthread_mutex_init(&data->mutex->write_lock, NULL);
+	pthread_mutex_init(&data->mutex->eat_lock, NULL);
+	pthread_mutex_init(&data->mutex->death_lock, NULL);
 	return (0);
 }
 
