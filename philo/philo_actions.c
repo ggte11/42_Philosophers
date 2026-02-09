@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:13:44 by martim            #+#    #+#             */
-/*   Updated: 2026/01/27 15:40:14 by martim           ###   ########.fr       */
+/*   Updated: 2026/02/09 18:16:59 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->mutex->eat_lock);
 	print_status(philo, "is eating");
-	ft_usleep(philo->data->info->time_to_eat);
+	ft_usleep(philo->data->info->time_to_eat, philo->data);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 }
@@ -36,18 +36,18 @@ static void	*philo_routine(void *arg)
 	if (philo->data->info->nbr_philos == 1)
 	{
 		print_status(philo, "has taken a fork");
-		ft_usleep(philo->data->info->time_to_die);
+		ft_usleep(philo->data->info->time_to_die, philo->data);
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(1, philo->data);
 	while (!is_dead(philo->data))
 	{
 		eat(philo);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is sleeping");
-		ft_usleep(philo->data->info->time_to_sleep);
+		ft_usleep(philo->data->info->time_to_sleep, philo->data);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is thinking");

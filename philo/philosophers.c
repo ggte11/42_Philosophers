@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:55 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/27 15:48:26 by martim           ###   ########.fr       */
+/*   Updated: 2026/02/09 15:26:00 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	parsing(int nb_params, char **params)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 1;
 	if (nb_params != 5 && nb_params != 6)
-		return(write(2, "Incorrect number of arguments", 30));
+		return (write(2, "Incorrect number of arguments", 30));
 	while (j < nb_params)
 	{
 		i = 0;
 		while (params[j][i] != '\0')
 		{
 			if (!ft_isdigit(params[j][i]))
-				return(write(2, "Invalid parameter character", 28));
+				return (write(2, "Invalid parameter character", 28));
 			i++;
 		}
 		j++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:23:01 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/22 19:30:31 by martim           ###   ########.fr       */
+/*   Updated: 2026/02/09 17:33:45 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,17 @@ long	get_time(void)
 	return ((tv.tv_sec * 1000) + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(long milsecs)
+void	ft_usleep(long milsecs, t_data *data)
 {
 	long	start;
 
 	start = get_time();
 	while ((get_time() - start) < milsecs)
+	{
+		if (is_dead(data))
+			break ;
 		usleep(100);
+	}
 }
 
 void	print_status(t_philo *philo, char *status)

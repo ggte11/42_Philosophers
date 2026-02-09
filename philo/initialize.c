@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/01/27 14:54:24 by martim           ###   ########.fr       */
+/*   Updated: 2026/02/09 15:26:54 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	init_mutex(t_data *data)
 	if (!data->mutex)
 		return (1);
 	data->mutex->forks = malloc(sizeof(pthread_mutex_t)
-		* data->info->nbr_philos);
+			*data->info->nbr_philos);
 	if (!data->mutex->forks)
 		return (1);
 	i = 0;
-	while(i < data->info->nbr_philos)
+	while (i < data->info->nbr_philos)
 	{
 		if (pthread_mutex_init(&data->mutex->forks[i], NULL) != 0)
 		{
-			while(--i >= 0)
+			while (--i >= 0)
 				pthread_mutex_destroy(&data->mutex->forks[i]);
 			return (1);
 		}
