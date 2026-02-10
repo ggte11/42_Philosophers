@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:57 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/02/09 17:34:16 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:52:20 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		start_simulation(t_data *data);
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 long	get_time(void);
-void	ft_usleep(long milsecs, t_data *data);
+void	ft_usleep(t_data *data, long milsecs);
 void	print_status(t_philo *philo, char *status);
 
 // initializer

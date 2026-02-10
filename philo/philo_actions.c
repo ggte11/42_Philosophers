@@ -6,26 +6,50 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:13:44 by martim            #+#    #+#             */
-/*   Updated: 2026/02/09 18:16:59 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:52:15 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+static void	get_forks(t_philo *philo, pthread_mutex_t **first,
+		pthread_mutex_t **second)
+{
+	if (philo->id % 2 == 0)
+	{
+		*first = philo->right_fork;
+		*second = philo->left_fork;
+	}
+	else
+	{
+		*first = philo->left_fork;
+		*second = philo->right_fork;
+	}
+}
+
 static void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+
+	get_forks(philo, &first_fork, &second_fork);
+	pthread_mutex_lock(first_fork);
 	print_status(philo, "has taken a fork");
-	pthread_mutex_lock(philo->right_fork);
+	if (is_dead(philo->data))
+	{
+		pthread_mutex_unlock(first_fork);
+		return ;
+	}
+	pthread_mutex_lock(second_fork);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->data->mutex->eat_lock);
 	philo->last_meal_eaten = get_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->mutex->eat_lock);
 	print_status(philo, "is eating");
-	ft_usleep(philo->data->info->time_to_eat, philo->data);
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+	ft_usleep(philo->data, philo->data->info->time_to_eat);
+	pthread_mutex_unlock(second_fork);
+	pthread_mutex_unlock(first_fork);
 }
 
 static void	*philo_routine(void *arg)
@@ -36,18 +60,20 @@ static void	*philo_routine(void *arg)
 	if (philo->data->info->nbr_philos == 1)
 	{
 		print_status(philo, "has taken a fork");
-		ft_usleep(philo->data->info->time_to_die, philo->data);
+		ft_usleep(philo->data ,philo->data->info->time_to_die);
 		return (NULL);
 	}
-	if (philo->id % 2 == 0)
-		ft_usleep(1, philo->data);
+	if (philo->data->info->nbr_philos % 2 != 0)
+		if (philo->data->info->time_to_eat >= philo->data->info->time_to_sleep)
+			ft_usleep(philo->data, (philo->data->info->time_to_eat * 2
+					- philo->data->info->time_to_sleep));
 	while (!is_dead(philo->data))
 	{
 		eat(philo);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is sleeping");
-		ft_usleep(philo->data->info->time_to_sleep, philo->data);
+		ft_usleep(philo->data ,philo->data->info->time_to_sleep);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is thinking");
