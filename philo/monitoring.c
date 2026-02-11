@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:01:01 by martim            #+#    #+#             */
-/*   Updated: 2026/02/11 15:27:16 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/11 18:31:56 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ void	monitoring(t_data *data)
 		}
 		if (all_ate_enough(data))
 			return ;
-		ft_usleep(data, 50);
 	}
 }

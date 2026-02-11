@@ -1,6 +1,6 @@
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g -pthread
 OBJ_DIR		= obj
 
 SRCS		= philosophers.c initialize.c utils.c \
