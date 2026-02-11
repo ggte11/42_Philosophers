@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:13:44 by martim            #+#    #+#             */
-/*   Updated: 2026/02/10 17:52:15 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:14:55 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,18 @@ static void	*philo_routine(void *arg)
 	if (philo->data->info->nbr_philos == 1)
 	{
 		print_status(philo, "has taken a fork");
-		ft_usleep(philo->data ,philo->data->info->time_to_die);
+		ft_usleep(philo->data, philo->data->info->time_to_die);
 		return (NULL);
 	}
-	if (philo->data->info->nbr_philos % 2 != 0)
-		if (philo->data->info->time_to_eat >= philo->data->info->time_to_sleep)
-			ft_usleep(philo->data, (philo->data->info->time_to_eat * 2
-					- philo->data->info->time_to_sleep));
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->data, 10);
 	while (!is_dead(philo->data))
 	{
 		eat(philo);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is sleeping");
-		ft_usleep(philo->data ,philo->data->info->time_to_sleep);
+		ft_usleep(philo->data, philo->data->info->time_to_sleep);
 		if (is_dead(philo->data))
 			break ;
 		print_status(philo, "is thinking");
@@ -90,8 +88,8 @@ int	start_simulation(t_data *data)
 	while (i < data->info->nbr_philos)
 	{
 		data->arr_philo[i].last_meal_eaten = data->info->start_time;
-		if (pthread_create(&data->arr_philo[i].thread, NULL,
-				philo_routine, &data->arr_philo[i]) != 0)
+		if (pthread_create(&data->arr_philo[i].thread, NULL, philo_routine,
+				&data->arr_philo[i]) != 0)
 			return (1);
 		i++;
 	}

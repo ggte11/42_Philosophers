@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:23:01 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/02/10 15:54:28 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:08:28 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_usleep(t_data *data, long milsecs)
 	{
 		if (is_dead(data))
 			break ;
-		usleep(100);
+		usleep(500);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:22:52 by mcardoso          #+#    #+#             */
-/*   Updated: 2026/02/10 17:52:22 by mcardoso         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:25:16 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	init_info(t_data *data, char **str)
 	data->info->time_to_sleep = ft_atoi(str[4]);
 	if (str[5])
 		data->info->meal_amount = ft_atoi(str[5]);
+	if (data->info->meal_amount == 0)
+		return (1);
 	else
 		data->info->meal_amount = -1;
 	return (0);

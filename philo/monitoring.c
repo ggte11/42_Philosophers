@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martim <martim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mcardoso <mcardoso@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:01:01 by martim            #+#    #+#             */
-/*   Updated: 2026/01/27 15:49:40 by martim           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:27:16 by mcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /// @brief Checks all philosophers for required number of meals.
-/// @param data 
+/// @param data
 /// @return int
 static int	all_ate_enough(t_data *data)
 {
@@ -64,7 +64,7 @@ static int	check_if_dead(t_data *data, int i)
 }
 
 /// @brief loop that checks for deaths and meal completion.
-/// @param data 
+/// @param data
 void	monitoring(t_data *data)
 {
 	int	i;
@@ -80,6 +80,6 @@ void	monitoring(t_data *data)
 		}
 		if (all_ate_enough(data))
 			return ;
-		usleep(100);
+		ft_usleep(data, 50);
 	}
 }
